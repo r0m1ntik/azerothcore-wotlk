@@ -14540,11 +14540,18 @@ void Player::SendTalentsInfoData(bool pet)
 {
     WorldPacket data(SMSG_TALENTS_INFO, 50);
     data << uint8(pet ? 1 : 0);
+    bool shouldSend = true;
+
     if (pet)
         BuildPetTalentsInfoData(&data);
-    else
-        BuildPlayerTalentsInfoData(&data);
-    SendDirectMessage(&data);
+    else {
+        if (!sWorld->getBoolConfig(CONFIG_MULTISPEC_ENABLED))
+            BuildPlayerTalentsInfoData(&data);
+        else
+            sScriptMgr->OnSendPlayerTalents(this, this);
+    }
+    if (shouldSend)
+        SendDirectMessage(&data);
 }
 
 void Player::BuildEnchantmentsInfoData(WorldPacket* data)

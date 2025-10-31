@@ -211,6 +211,7 @@ enum PlayerHook
     PLAYERHOOK_ON_CAN_GIVE_LEVEL,
     PLAYERHOOK_ON_SEND_LIST_INVENTORY,
     PLAYERHOOK_ON_GIVE_REPUTATION,
+    PLAYERHOOK_ON_SEND_TALENTS,
     PLAYERHOOK_END
 };
 
@@ -220,6 +221,8 @@ protected:
     PlayerScript(const char* name, std::vector<uint16> enabledHooks = std::vector<uint16>());
 
 public:
+    virtual void OnSendPlayerTalents(Player* /*to*/, Player* /*from*/) { }
+    
     // Called when a player dies
     virtual void OnPlayerJustDied(Player* /*player*/) { }
 

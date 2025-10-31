@@ -293,6 +293,7 @@ public: /* AchievementCriteriaScript */
     bool OnCriteriaCheck(uint32 scriptId, Player* source, Unit* target, uint32 criteria_id);
 
 public: /* PlayerScript */
+    void OnSendPlayerTalents(Player* to, Player* target);
     void OnPlayerJustDied(Player* player);
     void OnPlayerCalculateTalentsPoints(Player const* player, uint32& talentPointsForLevel);
     void OnPlayerReleasedGhost(Player* player);

@@ -17,6 +17,7 @@
 
 #include "Player.h"
 #include "WorldConfig.h"
+#include "SharedDefines.h"
 
 void WorldConfig::BuildConfigCache()
 {
@@ -669,4 +670,8 @@ void WorldConfig::BuildConfigCache()
     SetConfigValue<uint32>(CONFIG_SCOURGEINVASION_COUNTER_THIRD, "ScourgeInvasion.CounterThird", 150);
 
     SetConfigValue<std::string>(CONFIG_NEW_CHAR_STRING, "PlayerStart.String", "");
+
+    // Multi-spec
+    SetConfigValue<bool>(CONFIG_MULTISPEC_ENABLED, "MultiSpec.Enable", false);
+    SetConfigValue<uint32>(CONFIG_MULTISPEC_MAXSPECS, "MultiSpec.MaxSpecs", MAX_TALENT_SPECS);
 }

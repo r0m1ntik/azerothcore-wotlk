@@ -1001,16 +1001,17 @@ void WorldSession::HandleInspectOpcode(WorldPacket& recv_data)
     WorldPacket data(SMSG_INSPECT_TALENT, guid_size + 4 + talent_points);
     data << player->GetPackGUID();
 
-    if (sWorld->getBoolConfig(CONFIG_TALENTS_INSPECTING) || _player->IsGameMaster())
-    {
-        player->BuildPlayerTalentsInfoData(&data);
-    }
-    else
-    {
-        data << uint32(0);                                  // unspentTalentPoints
-        data << uint8(0);                                   // talentGroupCount
-        data << uint8(0);                                   // talentGroupIndex
-    }
+    // HATER: Disabled for now
+    // if (sWorld->getBoolConfig(CONFIG_TALENTS_INSPECTING) || _player->IsGameMaster())
+    // {
+    //     player->BuildPlayerTalentsInfoData(&data);
+    // }
+    // else
+    // {
+    data << uint32(0);                                  // unspentTalentPoints
+    data << uint8(0);                                   // talentGroupCount
+    data << uint8(0);                                   // talentGroupIndex
+    // }
 
     player->BuildEnchantmentsInfoData(&data);
     SendPacket(&data);

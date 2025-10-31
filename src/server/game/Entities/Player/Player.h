@@ -1760,6 +1760,7 @@ public:
             SetNeedToSaveGlyphs(true);
     }
     [[nodiscard]] uint32 GetGlyph(uint8 slot) const { return m_Glyphs[m_activeSpec][slot]; }
+    [[nodiscard]] uint32 GetGlyph(uint8 spec, uint8 slot) const { return m_Glyphs[spec][slot]; } 
 
     [[nodiscard]] uint32 GetFreePrimaryProfessionPoints() const { return GetUInt32Value(PLAYER_CHARACTER_POINTS2); }
     void SetFreePrimaryProfessions(uint16 profs) { SetUInt32Value(PLAYER_CHARACTER_POINTS2, profs); }
