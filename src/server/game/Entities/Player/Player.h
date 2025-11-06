@@ -128,14 +128,14 @@ struct PlayerSpell
 {
     PlayerSpellState State : 7; // UPPER CASE TO CAUSE CONSOLE ERRORS (CHECK EVERY USAGE)!
     bool Active            : 1; // UPPER CASE TO CAUSE CONSOLE ERRORS (CHECK EVERY USAGE)! lower rank of a spell are not useable, but learnt
-    uint8 specMask         : 8;
+    uint16 specMask        : 16;
     bool IsInSpec(uint8 spec) { return (specMask & (1 << spec)); }
 };
 
 struct PlayerTalent
 {
     PlayerSpellState State : 8; // UPPER CASE TO CAUSE CONSOLE ERRORS (CHECK EVERY USAGE)!
-    uint8 specMask         : 8;
+    uint16 specMask        : 16;
     uint32 talentID;
     bool inSpellBook;
     bool IsInSpec(uint8 spec) { return (specMask & (1 << spec)); }
@@ -175,7 +175,7 @@ enum TalentTree // talent tabs
     TALENT_TREE_DRUID_RESTORATION = 282
 };
 
-#define SPEC_MASK_ALL 255
+#define SPEC_MASK_ALL 65535
 
 // Spell modifier (used for modify other spells)
 struct SpellModifier
@@ -1696,8 +1696,8 @@ public:
     void SendProficiency(ItemClass itemClass, uint32 itemSubclassMask);
     void SendInitialSpells();
     void SendLearnPacket(uint32 spellId, bool learn);
-    bool addSpell(uint32 spellId, uint8 addSpecMask, bool updateActive, bool temporary = false, bool learnFromSkill = false);
-    bool _addSpell(uint32 spellId, uint8 addSpecMask, bool temporary, bool learnFromSkill = false);
+    bool addSpell(uint32 spellId, uint16 addSpecMask, bool updateActive, bool temporary = false, bool learnFromSkill = false);
+    bool _addSpell(uint32 spellId, uint16 addSpecMask, bool temporary, bool learnFromSkill = false);
     void learnSpell(uint32 spellId, bool temporary = false, bool learnFromSkill = false);
     void removeSpell(uint32 spellId, uint8 removeSpecMask, bool onlyTemporary);
     void resetSpells();
@@ -1723,9 +1723,9 @@ public:
     void LearnTalent(uint32 talentId, uint32 talentRank, bool command = false);
     void LearnPetTalent(ObjectGuid petGuid, uint32 talentId, uint32 talentRank);
 
-    bool addTalent(uint32 spellId, uint8 addSpecMask, uint8 oldTalentRank);
+    bool addTalent(uint32 spellId, uint16 addSpecMask, uint8 oldTalentRank);
     void _removeTalent(PlayerTalentMap::iterator& itr, uint8 specMask);
-    void _removeTalent(uint32 spellId, uint8 specMask);
+    void _removeTalent(uint32 spellId, uint16 specMask);
     void _removeTalentAurasAndSpells(uint32 spellId);
     void _addTalentAurasAndSpells(uint32 spellId);
     [[nodiscard]] bool HasTalent(uint32 spell_id, uint8 spec) const;
@@ -1739,7 +1739,7 @@ public:
     // Dual Spec
     void UpdateSpecCount(uint8 count);
     [[nodiscard]] uint8 GetActiveSpec() const { return m_activeSpec; }
-    [[nodiscard]] uint8 GetActiveSpecMask() const { return (1 << m_activeSpec); }
+    [[nodiscard]] uint16 GetActiveSpecMask() const { return (1 << m_activeSpec); }
     void SetActiveSpec(uint8 spec) { m_activeSpec = spec; }
     [[nodiscard]] uint8 GetSpecsCount() const { return m_specsCount; }
     void SetSpecsCount(uint8 count) { m_specsCount = count; }

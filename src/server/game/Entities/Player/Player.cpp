@@ -2894,7 +2894,7 @@ void Player::AddNewMailDeliverTime(time_t deliver_time)
     }
 }
 
-bool Player::addTalent(uint32 spellId, uint8 addSpecMask, uint8 oldTalentRank)
+bool Player::addTalent(uint32 spellId, uint16 addSpecMask, uint8 oldTalentRank)
 {
     SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(spellId);
     if (!SpellMgr::CheckSpellValid(spellInfo, spellId, true))
@@ -2955,7 +2955,7 @@ bool Player::addTalent(uint32 spellId, uint8 addSpecMask, uint8 oldTalentRank)
     return false;
 }
 
-void Player::_removeTalent(uint32 spellId, uint8 specMask)
+void Player::_removeTalent(uint32 spellId, uint16 specMask)
 {
     PlayerTalentMap::iterator itr = m_talents.find(spellId);
     if (itr == m_talents.end() || itr->second->State == PLAYERSPELL_REMOVED)
@@ -3045,7 +3045,7 @@ void Player::SendLearnPacket(uint32 spellId, bool learn)
     }
 }
 
-bool Player::addSpell(uint32 spellId, uint8 addSpecMask, bool updateActive, bool temporary /*= false*/, bool learnFromSkill /*= false*/)
+bool Player::addSpell(uint32 spellId, uint16 addSpecMask, bool updateActive, bool temporary /*= false*/, bool learnFromSkill /*= false*/)
 {
     if (!_addSpell(spellId, addSpecMask, temporary, learnFromSkill))
         return false;
@@ -3121,7 +3121,7 @@ bool Player::CheckSkillLearnedBySpell(uint32 spellId)
     return true;
 }
 
-bool Player::_addSpell(uint32 spellId, uint8 addSpecMask, bool temporary, bool learnFromSkill /*= false*/)
+bool Player::_addSpell(uint32 spellId, uint16 addSpecMask, bool temporary, bool learnFromSkill /*= false*/)
 {
     // pussywizard: this can be called to OVERWRITE currently existing spell params! usually to set active = false for lower ranks of a spell
 
