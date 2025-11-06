@@ -2198,7 +2198,7 @@ void Player::UpdateSpecCount(uint8 count)
         {
             stmt = CharacterDatabase.GetPreparedStatement(CHAR_INS_CHAR_ACTION);
             stmt->SetData(0, GetGUID().GetCounter());
-            stmt->SetData(1, 1);
+            stmt->SetData(1, curCount);
             stmt->SetData(2, itr->first);
             stmt->SetData(3, itr->second.GetAction());
             stmt->SetData(4, uint8(itr->second.GetType()));
