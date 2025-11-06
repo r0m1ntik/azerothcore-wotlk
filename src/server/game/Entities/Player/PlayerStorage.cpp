@@ -5672,7 +5672,7 @@ bool Player::isAllowedToLoot(Creature const* creature)
 
 void Player::_LoadActions(PreparedQueryResult result)
 {
-    m_actionButtons.clear();
+    m_actionButtons = ActionButtonList();
 
     if (result)
     {

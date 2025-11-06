@@ -241,6 +241,11 @@ enum QuestSound
     QUEST_SOUND_FAILURE = 847
 };
 
+enum SpecializationSpells {
+    UNLOCK_SPEC = 63624,
+    ACTIVATE_SPEC = 63644
+};
+
 #define ACTION_BUTTON_ACTION(X) (uint32(X) & 0x00FFFFFF)
 #define ACTION_BUTTON_TYPE(X)   ((uint32(X) & 0xFF000000) >> 24)
 #define MAX_ACTION_BUTTON_ACTION_VALUE (0x00FFFFFF+1)

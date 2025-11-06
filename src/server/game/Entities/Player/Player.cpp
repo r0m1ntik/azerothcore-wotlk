@@ -303,7 +303,7 @@ Player::Player(WorldSession* session): Unit(), m_mover(this)
     m_activeSpec = 0;
     m_specsCount = 1;
 
-    for (uint8 i = 0; i < MAX_TALENT_SPECS; ++i)
+    for (uint8 i = 0; i < sWorld->getIntConfig(CONFIG_MULTISPEC_MAXSPECS); ++i)
     {
         for (uint8 g = 0; g < MAX_GLYPH_SLOT_INDEX; ++g)
             m_Glyphs[i][g] = 0;

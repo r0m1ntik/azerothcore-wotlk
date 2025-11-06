@@ -147,7 +147,7 @@ bool CharacterDatabaseCleaner::TalentCheck(uint32 talent_id)
 
 void CharacterDatabaseCleaner::CleanCharacterTalent()
 {
-    CharacterDatabase.DirectExecute("DELETE FROM character_talent WHERE specMask >= {}", 1 << MAX_TALENT_SPECS);
+    CharacterDatabase.DirectExecute("DELETE FROM character_talent WHERE specMask >= {}", 1 << sWorld->getIntConfig(CONFIG_MULTISPEC_MAXSPECS));
     CheckUnique("spell", "character_talent", &TalentCheck);
 }
 
