@@ -1002,16 +1002,37 @@ void WorldSession::HandleInspectOpcode(WorldPacket& recv_data)
     data << player->GetPackGUID();
 
     // HATER: Disabled for now
-    // if (sWorld->getBoolConfig(CONFIG_TALENTS_INSPECTING) || _player->IsGameMaster())
-    // {
-    //     player->BuildPlayerTalentsInfoData(&data);
-    // }
-    // else
-    // {
-    data << uint32(0);                                  // unspentTalentPoints
-    data << uint8(0);                                   // talentGroupCount
-    data << uint8(0);                                   // talentGroupIndex
-    // }
+    if (sWorld->getBoolConfig(CONFIG_TALENTS_INSPECTING) || _player->IsGameMaster()) {
+        data << uint32(player->GetFreeTalentPoints());
+        data << uint8(1);
+        data << uint8(0);
+
+        uint8 talentIdCount = 0;
+        std::size_t pos = data.wpos();
+        data << uint8(talentIdCount);                      // [PH], talentIdCount
+
+        auto specIdx = player->GetActiveSpec();
+        const PlayerTalentMap& talentMap = player->GetTalentMap();
+        for (PlayerTalentMap::const_iterator itr = talentMap.begin(); itr != talentMap.end(); ++itr)
+            if (TalentSpellPos const* talentPos = GetTalentSpellPos(itr->first))
+                if (itr->second->State != PLAYERSPELL_REMOVED && itr->second->IsInSpec(specIdx)) // pussywizard
+                {
+                    data << uint32(talentPos->talent_id);  // Talent.dbc
+                    data << uint8(talentPos->rank);        // talentMaxRank (0-4)
+                    ++talentIdCount;
+                }
+
+        data.put<uint8>(pos, talentIdCount);               // put real count
+
+        data << uint8(MAX_GLYPH_SLOT_INDEX);               // glyphs count
+
+        for (uint8 i = 0; i < MAX_GLYPH_SLOT_INDEX; ++i)
+            data << uint16(player->m_Glyphs[specIdx][i]);          // GlyphProperties.dbc
+    } else {
+        data << uint32(0);                                  // unspentTalentPoints
+        data << uint8(0);                                   // talentGroupCount
+        data << uint8(0);                                   // talentGroupIndex
+    }
 
     player->BuildEnchantmentsInfoData(&data);
     SendPacket(&data);
