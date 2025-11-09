@@ -1,0 +1,1 @@
+ALTER TABLE character_spell MODIFY COLUMN specMask int unsigned;
